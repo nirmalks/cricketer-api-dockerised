@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class BookmarkerApiApplication
+class CricketerApiApplication
 
 fun main(args: Array<String>) {
-	runApplication<BookmarkerApiApplication>(*args)
+	runApplication<CricketerApiApplication>(*args)
 }
