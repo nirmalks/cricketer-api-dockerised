@@ -178,6 +178,17 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!--	run using ./mvnw jib:build		-->
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.3.0</version>
+				<configuration>
+					<to>
+						<image>nirmal/cricketer-api-jib</image>
+					</to>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
