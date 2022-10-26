@@ -187,6 +187,11 @@
 					<to>
 						<image>nirmal/cricketer-api-jib</image>
 					</to>
+					<container>
+						<ports>
+							<port>8080</port>
+						</ports>
+					</container>
 				</configuration>
 			</plugin>
 		</plugins>
