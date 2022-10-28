@@ -17,6 +17,8 @@
 		<java.version>17</java.version>
 		<kotlin.version>1.6.21</kotlin.version>
 		<testcontainers.version>1.17.4</testcontainers.version>
+		<dockerUserName>nirmalks4</dockerUserName>
+		<dockerImageName>${dockerUserName}/${project.artifactId}</dockerImageName>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -184,8 +186,15 @@
 				<artifactId>jib-maven-plugin</artifactId>
 				<version>3.3.0</version>
 				<configuration>
+					<from>
+						<image>eclipse-temurin:17-jdk</image>
+					</from>
 					<to>
-						<image>nirmal/cricketer-api-jib</image>
+						<image>${dockerImageName}</image>
+						<tags>
+							<tag>latest</tag>
+							<tag>${project.version}</tag>
+						</tags>
 					</to>
 					<container>
 						<ports>
