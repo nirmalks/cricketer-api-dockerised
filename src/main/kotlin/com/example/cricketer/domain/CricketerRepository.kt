@@ -14,4 +14,6 @@ interface CricketerRepository: PagingAndSortingRepository<Cricketer, Long> {
         where lower(c.name) like lower(concat('%', :query, '%'))
     """)
     fun searchCricketers(query: String, pageable: Pageable): Page<CricketerDTO>
+
+    fun findByNameContainsIgnoreCase(query: String, pageable: Pageable): Page<CricketerDTO>
 }
