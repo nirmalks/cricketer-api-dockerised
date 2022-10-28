@@ -16,10 +16,17 @@ class CricketerController(private val cricketerService: CricketerService) {
             name = "page",
             required = false,
             defaultValue = "1"
-        ) page: Int
+        ) page: Int,
+        @RequestParam(
+            name = "query",
+            required = false,
+            defaultValue = ""
+        ) query: String
     ): CricketerResponse {
-        return cricketerService.getAllPlayers(page)
-
+        if (query.isEmpty()) {
+            return cricketerService.getAllPlayers(page)
+        }
+        return cricketerService.searchPlayers(query, page)
     }
 
     @GetMapping("/cricketers/{id}")

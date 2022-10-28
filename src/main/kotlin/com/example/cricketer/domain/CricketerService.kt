@@ -28,6 +28,12 @@ class CricketerService(@Autowired val cricketerRepository: CricketerRepository) 
         return CricketerResponse.fromCricketerPage(cricketerRepository.findCricketers(pageable))
     }
 
+    fun searchPlayers(query: String, page: Int = 0): CricketerResponse {
+        val pageNumber = if (page < 1) 0 else page - 1
+        val pageable = PageRequest.of(pageNumber, 5, Sort.Direction.DESC, "name")
+        return CricketerResponse.fromCricketerPage(cricketerRepository.searchCricketers(query, pageable))
+    }
+
     suspend fun deleteById(id: Long) {
         return cricketerRepository.deleteById(id)
     }

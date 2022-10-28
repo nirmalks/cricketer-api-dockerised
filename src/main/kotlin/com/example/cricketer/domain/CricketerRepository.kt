@@ -8,4 +8,10 @@ import org.springframework.data.repository.PagingAndSortingRepository
 interface CricketerRepository: PagingAndSortingRepository<Cricketer, Long> {
     @Query("select new com.example.cricketer.domain.CricketerDTO(c.id, c.name, c.country, c.highestScore) from Cricketer c")
     fun findCricketers(pageable: Pageable): Page<CricketerDTO>
+
+    @Query("""
+        select new com.example.cricketer.domain.CricketerDTO(c.id, c.name, c.country, c.highestScore) from Cricketer c
+        where lower(c.name) like lower(concat('%', :query, '%'))
+    """)
+    fun searchCricketers(query: String, pageable: Pageable): Page<CricketerDTO>
 }
