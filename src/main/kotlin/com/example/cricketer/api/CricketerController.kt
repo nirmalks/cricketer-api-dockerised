@@ -30,7 +30,7 @@ class CricketerController(private val cricketerService: CricketerService) {
 
     @GetMapping("/cricketers/{id}")
     fun getCricketer(@PathVariable("id") id: Long): ResponseEntity<CricketerDTO> {
-        if(cricketerService.findById(id).isPresent()) {
+        if(cricketerService.findById(id).isPresent) {
             return ResponseEntity.ok(CricketerDTO.toDto(cricketerService.findById(id).get()))
         }
         return ResponseEntity(HttpStatus.NOT_FOUND)
