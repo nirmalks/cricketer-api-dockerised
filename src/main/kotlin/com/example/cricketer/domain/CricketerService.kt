@@ -13,11 +13,11 @@ import java.util.*
 class CricketerService(@Autowired val cricketerRepository: CricketerRepository) {
     val logger = LoggerFactory.getLogger(CricketerService::class.java)
 
-    suspend fun save(cricketer: Cricketer): Cricketer {
+    fun save(cricketer: Cricketer): Cricketer {
         return cricketerRepository.save(cricketer)
     }
 
-    suspend fun findById(id: Long): Optional<Cricketer> {
+    fun findById(id: Long): Optional<Cricketer> {
         return cricketerRepository.findById(id)
     }
 
@@ -34,7 +34,20 @@ class CricketerService(@Autowired val cricketerRepository: CricketerRepository) 
         return CricketerResponse.fromCricketerPage(cricketerRepository.findByNameContainsIgnoreCase(query, pageable))
     }
 
-    suspend fun deleteById(id: Long) {
+    fun deleteById(id: Long) {
         return cricketerRepository.deleteById(id)
+    }
+
+    fun createCricketer(cricketer: CricketerRequest): CricketerDTO {
+        val cricketerEntity = with(cricketer) {
+            Cricketer(
+                null,
+                name,
+                country,
+                highestScore
+            )
+        }
+        cricketerRepository.save(cricketerEntity)
+        return CricketerDTO.toDto(cricketerEntity)
     }
 }

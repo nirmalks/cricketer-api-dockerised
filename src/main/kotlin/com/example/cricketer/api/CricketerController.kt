@@ -1,11 +1,10 @@
 package com.example.cricketer.api
 
-import com.example.cricketer.domain.Cricketer
-import com.example.cricketer.domain.CricketerResponse
-import com.example.cricketer.domain.CricketerService
+import com.example.cricketer.domain.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api")
@@ -30,20 +29,21 @@ class CricketerController(private val cricketerService: CricketerService) {
     }
 
     @GetMapping("/cricketers/{id}")
-    suspend fun getCricketer(@PathVariable("id") id: Long): ResponseEntity<Cricketer> {
+    fun getCricketer(@PathVariable("id") id: Long): ResponseEntity<CricketerDTO> {
         if(cricketerService.findById(id).isPresent()) {
-            return ResponseEntity.ok(cricketerService.findById(id).get())
+            return ResponseEntity.ok(CricketerDTO.toDto(cricketerService.findById(id).get()))
         }
         return ResponseEntity(HttpStatus.NOT_FOUND)
     }
 
     @PostMapping("/cricketers")
-    suspend fun addCricketer(@RequestBody cricketer: Cricketer): ResponseEntity<Cricketer> {
-        return ResponseEntity(cricketerService.save(cricketer),HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.CREATED)
+    fun addCricketer(@RequestBody @Valid cricketer: CricketerRequest): CricketerDTO {
+        return cricketerService.createCricketer(cricketer)
     }
 
     @PutMapping("/cricketers/{id}")
-    suspend fun updateCricketer(@PathVariable("id") id: Long, @RequestBody cricketer: Cricketer): ResponseEntity<Cricketer> {
+    fun updateCricketer(@PathVariable("id") id: Long, @RequestBody cricketer: Cricketer): ResponseEntity<Cricketer> {
         if(!cricketerService.findById(id).isPresent()) {
             return ResponseEntity(HttpStatus.NOT_FOUND)
         }
@@ -54,7 +54,7 @@ class CricketerController(private val cricketerService: CricketerService) {
     }
 
     @DeleteMapping("/cricketers/{id}")
-    suspend fun deleteCricketer(@PathVariable("id") id: Long): ResponseEntity<Unit> {
+    fun deleteCricketer(@PathVariable("id") id: Long): ResponseEntity<Unit> {
         if(!cricketerService.findById(id).isPresent()) {
             return ResponseEntity(HttpStatus.NOT_FOUND)
         }
