@@ -3,6 +3,7 @@ services:
   cricketer-api:
     build:
       dockerfile: Dockerfile
+    container_name: cricketer-api
     environment:
       SPRING_PROFILES_ACTIVE: docker
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver

@@ -24,7 +24,7 @@ function start() {
 function stop() {
     echo "Stopping all docker containers...."
     docker compose -f ${dockerComposeInfraFile} -f ${dockerComposeMainFile} stop
-    docker compose -f ${ddockerComposeInfraFile} -f ${dockerComposeMainFile} rm -f
+    docker compose -f ${dockerComposeInfraFile} -f ${dockerComposeMainFile} rm -f
 }
 
 function restart() {
